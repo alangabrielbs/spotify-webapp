@@ -5,9 +5,13 @@ import axios from 'axios'
 import { reducerCases } from '../../utils/constants/index'
 
 import { Container } from './styles'
+import { parseCookies } from 'nookies'
 
 export default function Playlists() {
-  const [{ token, playlists }, dispatch] = useStateProvider()
+  const { ['@token']: token } = parseCookies()
+
+  const [{ playlists }, dispatch] = useStateProvider()
+
   useEffect(() => {
     const getPlaylistData = async () => {
       const response = await axios.get('https://api.spotify.com/v1/me/playlists', {

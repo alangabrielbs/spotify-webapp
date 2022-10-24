@@ -5,9 +5,13 @@ import { reducerCases } from '../../utils/constants/index'
 import { useStateProvider } from '../../contexts/StateProvider'
 
 import { Container } from './styles'
+import { parseCookies } from 'nookies'
 
 export function CurrentTrack() {
-  const [{ token, currentlyPlaying }, dispatch] = useStateProvider()
+  const { ['@token']: token } = parseCookies()
+
+  const [{ currentlyPlaying }, dispatch] = useStateProvider()
+
   useEffect(() => {
     const getCurrentTrack = async () => {
       const response = await axios.get('https://api.spotify.com/v1/me/player/currently-playing', {

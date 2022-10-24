@@ -7,9 +7,11 @@ import axios from 'axios'
 import { reducerCases } from '../../utils/constants/index'
 
 import { Container } from './styles'
+import { parseCookies } from 'nookies'
 
 export function PlayerControls() {
-  const [{ token, playerState }, dispatch] = useStateProvider()
+  const { ['@token']: token } = parseCookies()
+  const [{ playerState }, dispatch] = useStateProvider()
 
   const changeTrack = async (type) => {
     await axios.post(

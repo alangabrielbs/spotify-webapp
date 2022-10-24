@@ -6,9 +6,13 @@ import axios from 'axios'
 import { reducerCases } from '../../utils/constants/index'
 
 import { Container } from './styles'
+import { parseCookies } from 'nookies'
 
 export function Body({ headerBackground }) {
-  const [{ token, selectedPlaylistId, selectedPlaylist }, dispatch] = useStateProvider()
+  const { ['@token']: token } = parseCookies()
+
+  const [{ selectedPlaylistId, selectedPlaylist }, dispatch] = useStateProvider()
+
   useEffect(() => {
     const getInitialPlaylist = async () => {
       const response = await axios.get(`https://api.spotify.com/v1/playlists/${selectedPlaylistId}`, {
